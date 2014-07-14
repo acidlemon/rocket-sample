@@ -2,29 +2,39 @@ package sample
 
 import (
 	"net"
-	"net/http"
-	"github.com/acidlemon/sixfold"
+	"github.com/acidlemon/rocket"
 )
 
 type WebApp struct {
-	sixfold.WebApp
+	rocket.WebApp
 }
-
-//func (app *WebApp) Start(listener net.Listener) {
-//	http.Serve(listener, nil)
-//}
 
 func NewWebApp() (WebApp) {
 	app := WebApp{}
 	app.Init()
 
+	app.AddRoute(
+		"/*all",
+		(&Controller{}).Wildcard,
+		&rocket.View{},
+	)
+	app.AddRoute(
+		"/",
+		(&Controller{}).TopPage,
+		&rocket.View{},
+	)
+	app.AddRoute(
+		"/signin",
+		(&Controller{}).Signin,
+		&rocket.View{},
+	)
 
-	// register routing
-	obj := &Controller{}
+	app.AddRoute(
+		"/xslate",
+		(&Controller{}).Xslate,
+		rocket.NewXslateView(),
+	)
 
-	app.AddRoute("/", func(w http.ResponseWriter, r *http.Request){ obj.TopPage(w, r) } )
-	app.AddRoute("/signin", func(w http.ResponseWriter, r *http.Request){ obj.Signin(w, r) } )
-	app.AddRoute("/favicon.ico", func(w http.ResponseWriter, r *http.Request){ obj.Signin(w, r) } )
 
 	app.BuildRouter()
 
@@ -35,8 +45,6 @@ func Start(listener net.Listener) {
 	app := NewWebApp()
 	app.Start(listener)
 }
-
-
 
 
 

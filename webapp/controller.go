@@ -1,20 +1,56 @@
 package sample
 
 import (
+	"fmt"
 	"net/http"
-//	"github.com/acidlemon/sixfold"
+	"github.com/acidlemon/rocket"
 )
 
 type Controller struct {
-	
 }
 
-func (c *Controller) TopPage (w http.ResponseWriter, r *http.Request) {
+func (self *Controller) TopPage (c rocket.CtxData) {
+	fmt.Println("toppage called")
 
+	c.Res().StatusCode = http.StatusOK
+	c.RenderText("you called / ")
 }
 
-func (c *Controller) Signin (w http.ResponseWriter, r *http.Request) {
+func (self *Controller) Signin (c rocket.CtxData) {
+	fmt.Println("signin called")
+	c.Res().StatusCode = http.StatusOK
 
+	value := rocket.RenderVars{
+		"nishikawa": "ichirin",
+		"ichinose": "shogo",
+		"acidlemon": "acidlemon",
+	}
+	c.RenderJSON(value)
 }
+
+func (self *Controller) Wildcard (c rocket.CtxData) {
+	fmt.Println("wildcard called")
+	c.Res().StatusCode = http.StatusOK
+
+	value := rocket.RenderVars{
+		"nishikawa": "ichirin",
+		"ichinose": "shogo",
+		"acidlemon": "powawa",
+	}
+	c.Render("template.html", value)
+}
+
+func (self *Controller) Xslate (c rocket.CtxData) {
+	fmt.Println("wildcard called")
+	c.Res().StatusCode = http.StatusOK
+
+	value := rocket.RenderVars{
+		"nishikawa": "ichirin",
+		"ichinose": "shogo",
+		"acidlemon": "powawa",
+	}
+	c.Render("xslate.tx", value)
+}
+
 
 

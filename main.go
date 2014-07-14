@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"net"
 	"github.com/lestrrat/go-server-starter-listener"
-	"github.com/acidlemon/sample-fold/webapp"
+	"github.com/acidlemon/rocket-sample/webapp"
 )
 
 func main () {
