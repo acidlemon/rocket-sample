@@ -23,21 +23,22 @@ func (self *Controller) Signin (c rocket.CtxData) {
 	value := rocket.RenderVars{
 		"nishikawa": "ichirin",
 		"ichinose": "shogo",
-		"acidlemon": "acidlemon",
+		"acidlemon": "powawa",
 	}
-	c.RenderJSON(value)
+	c.Render("template.html", value)
 }
 
 func (self *Controller) Wildcard (c rocket.CtxData) {
 	fmt.Println("wildcard called")
 	c.Res().StatusCode = http.StatusOK
 
-	value := rocket.RenderVars{
-		"nishikawa": "ichirin",
-		"ichinose": "shogo",
-		"acidlemon": "powawa",
+	value := rocket.RenderVars{}
+	for k, v := range c.Params() {
+		value[k] = v
 	}
-	c.Render("template.html", value)
+	value["_path"] = c.Args()
+
+	c.RenderJSON(value)
 }
 
 func (self *Controller) Xslate (c rocket.CtxData) {
