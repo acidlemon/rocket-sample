@@ -7,6 +7,19 @@ import (
 )
 
 type Controller struct {
+	*rocket.Controller
+}
+
+func NewController() *Controller {
+	c := &Controller{ rocket.NewController() }
+	view := &rocket.View{}
+
+	c.AddRoute("/*all",   c.Wildcard, view)
+	c.AddRoute("/",       c.TopPage, view)
+	c.AddRoute("/signin", c.Signin, view)
+	c.AddRoute("/xslate", c.Xslate, view)
+
+	return c
 }
 
 func (self *Controller) TopPage (c rocket.CtxData) {
