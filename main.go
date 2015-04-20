@@ -3,12 +3,13 @@ package main
 import (
 	"fmt"
 	"net"
+
+	"github.com/acidlemon/rocket-sample/sample"
 	"github.com/lestrrat/go-server-starter-listener"
-	"github.com/acidlemon/rocket-sample/webapp"
 )
 
-func main () {
-//	pwd, _ := os.Getwd()
+func main() {
+	//	pwd, _ := os.Getwd()
 
 	fmt.Println("Launch succeeded!")
 
@@ -24,7 +25,3 @@ func main () {
 
 	sample.Start(listener)
 }
-
-
-
-

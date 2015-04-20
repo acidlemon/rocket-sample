@@ -3,7 +3,8 @@ package sample
 import (
 	"fmt"
 	"net/http"
-	"github.com/acidlemon/rocket"
+
+	"gopkg.in/acidlemon/rocket.v2"
 )
 
 type Controller struct {
@@ -11,37 +12,36 @@ type Controller struct {
 }
 
 func NewController() *Controller {
-	c := &Controller{ rocket.NewController() }
+	c := &Controller{rocket.NewController()}
 	view := &rocket.View{}
 
-	c.AddRoute("/*all",   c.Wildcard, view)
-	c.AddRoute("/",       c.TopPage, view)
+	c.AddRoute("/*all", c.Wildcard, view)
+	c.AddRoute("/", c.TopPage, view)
 	c.AddRoute("/signin", c.Signin, view)
-	c.AddRoute("/xslate", c.Xslate, view)
 
 	return c
 }
 
-func (self *Controller) TopPage (c rocket.CtxData) {
+func (self *Controller) TopPage(c rocket.CtxData) {
 	fmt.Println("toppage called")
 
 	c.Res().StatusCode = http.StatusOK
 	c.RenderText("you called / ")
 }
 
-func (self *Controller) Signin (c rocket.CtxData) {
+func (self *Controller) Signin(c rocket.CtxData) {
 	fmt.Println("signin called")
 	c.Res().StatusCode = http.StatusOK
 
 	value := rocket.RenderVars{
 		"nishikawa": "ichirin",
-		"ichinose": "shogo",
+		"ichinose":  "shogo",
 		"acidlemon": "powawa",
 	}
 	c.Render("template.html", value)
 }
 
-func (self *Controller) Wildcard (c rocket.CtxData) {
+func (self *Controller) Wildcard(c rocket.CtxData) {
 	fmt.Println("wildcard called")
 	c.Res().StatusCode = http.StatusOK
 
@@ -53,18 +53,3 @@ func (self *Controller) Wildcard (c rocket.CtxData) {
 
 	c.RenderJSON(value)
 }
-
-func (self *Controller) Xslate (c rocket.CtxData) {
-	fmt.Println("wildcard called")
-	c.Res().StatusCode = http.StatusOK
-
-	value := rocket.RenderVars{
-		"nishikawa": "ichirin",
-		"ichinose": "shogo",
-		"acidlemon": "powawa",
-	}
-	c.Render("xslate.tx", value)
-}
-
-
-

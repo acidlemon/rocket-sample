@@ -1,10 +1,9 @@
 package sample
 
 import (
-	"github.com/acidlemon/rocket"
+	"gopkg.in/acidlemon/rocket.v2"
 )
 
 type View struct {
 	rocket.View
 }
-
